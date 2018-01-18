@@ -15,10 +15,6 @@ app.get('/', function(request, response) {
   response.render('pages/index')
 });
 
-app.get('/cool', function(request, response) {
-  response.send(cool());
-});
-
 var upload = multer({ dest: './uploads' });
 
 app.post('/parse', function (req, res) {
@@ -35,7 +31,9 @@ app.post('/parse', function (req, res) {
         document, null, 0, 0
         ).iterateNext();
   console.log('[' + oNode.text + '](' + oNode.href + ')');
-
+  http.request({ host: oNode.href, method: 'GET' }, function(res) {
+        console.log('Completed ' + oNode.text);
+    }).end();
 });
 
 app.listen(app.get('port'), function() {
