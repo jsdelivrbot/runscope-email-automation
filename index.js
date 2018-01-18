@@ -26,13 +26,13 @@ app.post('/parse', function (req, res) {
     // attachment will be a File object
   }
 
-  var oNode = text.evaluate('//a[1]', // XPath for first link in the document
-        document, null, 0, 0
-        ).iterateNext();
-  console.log('[' + oNode.text + '](' + oNode.href + ')');
+  // XPath for first link in the document
+  var oNode = text.evaluate('//a[1]', document, null, 0, 0).iterateNext();
+  console.log('Retrieved link: [' + oNode.text + '](' + oNode.href + ')');
+
   http.request({ host: oNode.href, method: 'GET' }, function(res) {
-        console.log('Completed ' + oNode.text);
-    }).end();
+      console.log('Completed ' + oNode.text);
+  }).end();
 });
 
 app.listen(app.get('port'), function() {
